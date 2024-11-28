@@ -662,12 +662,12 @@ run_step_4() {
 
     # Step 1: Crawling with GoSpider
     show_progress "Crawling links with GoSpider"
-    /Users/aravindkonduru/Downloads/tools/gospider/./gospider -S "${domain_name}-domains.txt" -c 10 -d 5 | tee -a "${domain_name}-gospider.txt" || handle_error "GoSpider crawl"
+    gospider -S "${domain_name}-domains.txt" -c 10 -d 5 | tee -a "${domain_name}-gospider.txt" || handle_error "GoSpider crawl"
     sleep 3
 
     # Step 2: Crawling with Hakrawler
     show_progress "Crawling links with Hakrawler"
-    cat "${domain_name}-domains.txt" | /Users/aravindkonduru/Downloads/tools/hakrawler/./hakrawler -d 3 | tee -a "${domain_name}-hakrawler.txt" || handle_error "Hakrawler crawl"
+    cat "${domain_name}-domains.txt" | hakrawler -d 3 | tee -a "${domain_name}-hakrawler.txt" || handle_error "Hakrawler crawl"
     sleep 3
 
     # Step 3: Crawling with Katana
@@ -677,13 +677,13 @@ run_step_4() {
 
     # Step 4: Crawling with Waybackurls
     show_progress "Crawling links with Waybackurls"
-    cat "${domain_name}-domains.txt" | /Users/aravindkonduru/Downloads/tools/waybackurls/./waybackurls | tee -a "${domain_name}-waybackurls.txt" || handle_error "Waybackurls crawl"
+    cat "${domain_name}-domains.txt" | waybackurls | tee -a "${domain_name}-waybackurls.txt" || handle_error "Waybackurls crawl"
     sleep 3
 
     # Step 5: Crawling with Gau
     show_progress "Crawling links with Gau"
     rm -r /root/.gau.toml
-    cat "${domain_name}-domains.txt" | /Users/aravindkonduru/Downloads/tools/gau/cmd/gau/./gau | tee -a "${domain_name}-gau.txt" || handle_error "Gau crawl"
+    cat "${domain_name}-domains.txt" | gau | tee -a "${domain_name}-gau.txt" || handle_error "Gau crawl"
     sleep 3
 
     echo -e "${BOLD_BLUE}Crawling and filtering URLs completed successfully. Output files created for each tool.${NC}"
